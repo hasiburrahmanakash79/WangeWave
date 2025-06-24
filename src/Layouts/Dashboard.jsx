@@ -1,12 +1,16 @@
-import logo from "../assets/logo/logo.png";
+import logo from "../assets/logo/logo.svg";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import {
-  RiHome4Line,
-  RiShoppingCart2Line,
+  RiDashboardLine,
+  RiUserSettingsLine,
+  RiSettings4Line,
   RiLogoutBoxRLine,
+  RiCustomerService2Fill,
+  RiBankCardLine,
 } from "react-icons/ri";
 import { IconContext } from "react-icons";
 import Swal from "sweetalert2";
+import SectionTitle from "../components/SectionTitle";
 
 const Dashboard = () => {
   const location = useLocation();
@@ -29,13 +33,28 @@ const Dashboard = () => {
   const Menus = [
     {
       title: "Dashboard",
-      path: "/admin/dashboard",
-      icon: RiHome4Line,
+      path: "/",
+      icon: RiDashboardLine,
     },
     {
-      title: "Order Management",
-      path: "/admin/orders",
-      icon: RiShoppingCart2Line,
+      title: "User Control",
+      path: "/user_control",
+      icon: RiUserSettingsLine,
+    },
+    {
+      title: "Dispute Center",
+      path: "/dispute",
+      icon: RiCustomerService2Fill,
+    },
+    {
+      title: "Payments",
+      path: "/payments",
+      icon: RiBankCardLine,
+    },
+    {
+      title: "Settings",
+      path: "/settings",
+      icon: RiSettings4Line,
     },
   ];
 
@@ -44,24 +63,33 @@ const Dashboard = () => {
       {/* Sidebar */}
       <div className="w-64 h-screen shadow-lg border-r border-gray-200 fixed left-0 top-0 bottom-0 z-50 pt-8 transition-all duration-500">
         {/* Logo */}
-        <div className="p-2 flex items-center justify-center">
-          <img src={logo} alt="logo" className="cursor-pointer duration-300 w-12" />
+        <div className="p-2 flex flex-col items-center justify-center">
+          <img
+            src={logo}
+            alt="logo"
+            className="cursor-pointer duration-300 w-14 mb-1"
+          />
+          <p className="font-semibold text-center">
+            Fast. Trusted. Local Mechanics.
+          </p>
         </div>
 
         {/* Menu Items */}
-        <ul>
+        <ul className="space-y-5 mt-10">
           {Menus.map((menu, index) => (
             <Link
               to={menu.path}
               key={index}
-              className={`flex py-1.5 px-7 cursor-pointer text-sm items-center ${
+              className={`flex py-2 px-7 cursor-pointer text-sm items-center ${
                 location.pathname === menu.path
-                  ? "bg-[#006850] text-white"
-                  : "hover:bg-[#006850]/10"
+                  ? "bg-[#FF9500]/10 text-black"
+                  : "hover:bg-[#FF9500]/10"
               }`}
             >
               <li className="flex items-center gap-x-3 text-md">
-                <IconContext.Provider value={{ className: "react-icon text-xl" }}>
+                <IconContext.Provider
+                  value={{ className: "react-icon text-[22px] text-[#FF9500]" }}
+                >
                   <menu.icon />
                 </IconContext.Provider>
                 <span>{menu.title}</span>
@@ -73,7 +101,10 @@ const Dashboard = () => {
         {/* Profile & Logout */}
         <div className="mt-28 ms-3.5 md:ms-0 p-2 bottom-2 absolute w-full">
           <div className="flex items-center justify-center gap-x-3">
-            <Link to="/admin/profile" className="flex items-center gap-x-3 p-2 text-sm">
+            <Link
+              to="/profile"
+              className="flex items-center gap-x-3 p-2 text-sm"
+            >
               <img
                 src="https://randomuser.me/api/portraits/men/31.jpg"
                 alt="Profile"
@@ -81,7 +112,7 @@ const Dashboard = () => {
               />
               <span>
                 <p className="font-bold">Deal port</p>
-                <p>admin@admin.com</p>
+                <p>Super Admin</p>
               </span>
             </Link>
             <button onClick={handleLogout} className="text-2xl cursor-pointer">
@@ -93,7 +124,10 @@ const Dashboard = () => {
 
       {/* Main Content */}
       <div className="pl-64 pr-4 flex-1 overflow-y-auto transition-all duration-500 h-[100vh]">
-        <Outlet />
+        <SectionTitle />
+        <div className="p-5">
+          <Outlet />
+        </div>
       </div>
     </div>
   );
