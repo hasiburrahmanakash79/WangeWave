@@ -123,7 +123,7 @@ const Dashboard = () => {
       </div>
 
       {/* Main Content */}
-      <div className="pl-64 pr-4 flex-1 overflow-y-auto transition-all duration-500 h-[100vh]">
+      <div className="pl-64 flex-1 overflow-y-auto transition-all duration-500 h-[100vh]">
         <SectionTitle />
         <div className="p-5">
           <Outlet />

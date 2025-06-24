@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { FaBell } from "react-icons/fa";
-import { RiSearchLine } from "react-icons/ri";
+import { RiSearchLine, RiSettings3Fill } from "react-icons/ri";
 
 const SectionTitle = () => {
   const [open, setOpen] = useState(false);
@@ -67,7 +67,7 @@ const SectionTitle = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-between relative p-5 border-b border-gray-200">
+    <div className="flex items-center justify-between relative p-5 border-b border-gray-200 ">
       <div>
         <h1 className="">
           {getBreadcrumbTitle()}
@@ -92,16 +92,12 @@ const SectionTitle = () => {
           className="relative cursor-pointer"
           onClick={() => setOpen(!open)}
         >
-          <FaBell className="text-2xl text-gray-700" />
-          <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
+          <FaBell className="text-xl text-gray-700" />
+          <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-1 ring-white"></span>
         </button>
 
         {/* 👤 User Avatar */}
-        <img
-          src="https://randomuser.me/api/portraits/men/55.jpg"
-          alt="User"
-          className="w-9 h-9 rounded-full object-cover cursor-pointer hover:opacity-80 transition-opacity duration-200"
-        />
+        <RiSettings3Fill className="text-2xl text-gray-700"/>
 
         {/* 🔽 Dropdown */}
         {open && (
