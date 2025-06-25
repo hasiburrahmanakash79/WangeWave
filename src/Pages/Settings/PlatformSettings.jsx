@@ -1,9 +1,9 @@
-import { useState } from "react"
+import { useState } from "react";
 
 export default function PlatformSettings() {
-  const [notification, setNotification] = useState("")
-  const [privacyPolicy, setPrivacyPolicy] = useState("")
-  const [terms, setTerms] = useState("")
+  const [notification, setNotification] = useState("");
+  const [privacyPolicy, setPrivacyPolicy] = useState("");
+  const [terms, setTerms] = useState("");
 
   const [onboardingItems, setOnboardingItems] = useState([
     { id: "firstName", label: "First Name", completed: true },
@@ -14,23 +14,32 @@ export default function PlatformSettings() {
     { id: "profilePhoto", label: "Profile Photo", completed: false },
     { id: "certifications", label: "Certifications", completed: false },
     { id: "license", label: "License", completed: false },
-  ])
+  ]);
 
   const handleCheckboxChange = (id) => {
     setOnboardingItems((items) =>
-      items.map((item) => (item.id === id ? { ...item, completed: !item.completed } : item)),
-    )
-  }
+      items.map((item) =>
+        item.id === id ? { ...item, completed: !item.completed } : item
+      )
+    );
+  };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 space-y-6 bg-gray-50 min-h-screen">
+    <div className="max-w-6xl space-y-6 min-h-screen">
       {/* Platform Notification Card */}
-      <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
-        <h2 className="text-lg font-medium text-gray-900 mb-4">Platform Notification</h2>
-
+      <h2 className="text-lg font-bold text-gray-900 mb-4">
+        Platform Notification
+      </h2>
+      <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-5">
+      <h2 className="text-lg font-medium text-gray-900 mb-4">
+        Platform Notification
+      </h2>
         <div className="space-y-4">
           <div className="space-y-2">
-            <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-700"
+            >
               Description
             </label>
             <textarea
@@ -41,7 +50,9 @@ export default function PlatformSettings() {
               rows={4}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 resize-none text-sm"
             />
-            <p className="text-xs text-gray-500">This is a hint text to help user.</p>
+            <p className="text-xs text-gray-500">
+              This is a hint text to help user.
+            </p>
           </div>
 
           <button className="bg-gray-800 hover:bg-gray-900 text-white px-6 py-2 rounded-md text-sm font-medium transition-colors">
@@ -53,7 +64,8 @@ export default function PlatformSettings() {
       {/* Onboarding Requirements Card */}
       <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
         <h2 className="text-lg font-medium text-gray-900 mb-4">
-          Onboarding Requirement <span className="text-gray-500 font-normal">( For Mechanics )</span>
+          Onboarding Requirement{" "}
+          <span className="text-gray-500 font-normal">( For Mechanics )</span>
         </h2>
 
         <div className="space-y-6">
@@ -77,7 +89,11 @@ export default function PlatformSettings() {
                     }`}
                   >
                     {item.completed && (
-                      <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <svg
+                        className="w-3 h-3 text-white"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
                         <path
                           fillRule="evenodd"
                           d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -87,7 +103,10 @@ export default function PlatformSettings() {
                     )}
                   </label>
                 </div>
-                <label htmlFor={item.id} className="text-sm text-gray-700 cursor-pointer select-none">
+                <label
+                  htmlFor={item.id}
+                  className="text-sm text-gray-700 cursor-pointer select-none"
+                >
                   {item.label}
                 </label>
               </div>
@@ -107,11 +126,16 @@ export default function PlatformSettings() {
 
       {/* Privacy & Policy / Terms Card */}
       <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
-        <h2 className="text-lg font-medium text-gray-900 mb-4">Update Privacy & Policy / Terms</h2>
+        <h2 className="text-lg font-medium text-gray-900 mb-4">
+          Update Privacy & Policy / Terms
+        </h2>
 
         <div className="space-y-6">
           <div className="space-y-2">
-            <label htmlFor="privacy" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="privacy"
+              className="block text-sm font-medium text-gray-700"
+            >
               Privacy & Policy
             </label>
             <textarea
@@ -122,11 +146,16 @@ export default function PlatformSettings() {
               rows={3}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 resize-none text-sm"
             />
-            <p className="text-xs text-gray-500">This is a hint text to help user.</p>
+            <p className="text-xs text-gray-500">
+              This is a hint text to help user.
+            </p>
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="terms" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="terms"
+              className="block text-sm font-medium text-gray-700"
+            >
               Terms
             </label>
             <textarea
@@ -137,7 +166,9 @@ export default function PlatformSettings() {
               rows={3}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 resize-none text-sm"
             />
-            <p className="text-xs text-gray-500">This is a hint text to help user.</p>
+            <p className="text-xs text-gray-500">
+              This is a hint text to help user.
+            </p>
           </div>
 
           <div className="flex space-x-3 pt-2">
@@ -151,5 +182,5 @@ export default function PlatformSettings() {
         </div>
       </div>
     </div>
-  )
+  );
 }

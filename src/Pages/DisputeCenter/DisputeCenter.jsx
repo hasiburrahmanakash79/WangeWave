@@ -1,151 +1,192 @@
 "use client"
 
 import { useState, useMemo } from "react"
+import { useNavigate } from "react-router-dom"
 
-export default function UserControl() {
+export default function DisputeCenter() {
   const [activeTab, setActiveTab] = useState("View all")
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("All")
   const [currentPage, setCurrentPage] = useState(1)
   const [showFilters, setShowFilters] = useState(false)
   const itemsPerPage = 8
+  const navigate = useNavigate();
 
-  const allUsers = [
+  const allDisputes = [
     {
       id: 1,
-      name: "Olivia Rhye",
-      username: "@olivia",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Active",
-      role: "Car Owner",
-      carModel: "Tesla Model X",
+      jobId: "#3066",
+      service: "Engine Problem",
+      submitDate: "Jan 6, 2025",
+      carOwner: {
+        name: "Olivia Rhye",
+        avatar: "/placeholder.svg?height=32&width=32",
+        initials: "OR",
+      },
+      mechanic: {
+        name: "Olivia Rhye",
+        avatar: "/placeholder.svg?height=32&width=32",
+        initials: "OR",
+      },
+      status: "Pending Review",
+      statusColor: "orange",
     },
     {
       id: 2,
-      name: "Phoenix Baker",
-      username: "@phoenix",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Active",
-      role: "Car Owner",
-      carModel: "Land Cruiser-22",
+      jobId: "#3065",
+      service: "Oil Change",
+      submitDate: "Jan 6, 2025",
+      carOwner: {
+        name: "Phoenix Baker",
+        avatar: "/placeholder.svg?height=32&width=32",
+        initials: "PB",
+      },
+      mechanic: {
+        name: "Phoenix Baker",
+        avatar: "/placeholder.svg?height=32&width=32",
+        initials: "PB",
+      },
+      status: "Payment Done",
+      statusColor: "green",
     },
     {
       id: 3,
-      name: "Lana Steiner",
-      username: "@lana",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Inactive",
-      role: "Car Owner",
-      carModel: "Toyota Supra",
+      jobId: "#3064",
+      service: "Oil Change",
+      submitDate: "Jan 6, 2025",
+      carOwner: {
+        name: "Lana Steiner",
+        avatar: "/placeholder.svg?height=32&width=32",
+        initials: "LS",
+      },
+      mechanic: {
+        name: "Lana Steiner",
+        avatar: "/placeholder.svg?height=32&width=32",
+        initials: "LS",
+      },
+      status: "Pending Review",
+      statusColor: "orange",
     },
     {
       id: 4,
-      name: "Demi Wilkinson",
-      username: "@demi",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Active",
-      role: "Car Owner",
-      carModel: "Land Cruiser-22",
+      jobId: "#3063",
+      service: "AC System Repair",
+      submitDate: "Jan 5, 2025",
+      carOwner: {
+        name: "Demi Wilkinson",
+        avatar: "/placeholder.svg?height=32&width=32",
+        initials: "DW",
+      },
+      mechanic: {
+        name: "Demi Wilkinson",
+        avatar: "/placeholder.svg?height=32&width=32",
+        initials: "DW",
+      },
+      status: "Payment Done",
+      statusColor: "green",
     },
     {
       id: 5,
-      name: "Candice Wu",
-      username: "@candice",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Active",
-      role: "Car Owner",
-      carModel: "Toyota Supra",
+      jobId: "#3062",
+      service: "AC System Repair",
+      submitDate: "Jan 5, 2025",
+      carOwner: {
+        name: "Candice Wu",
+        avatar: "/placeholder.svg?height=32&width=32",
+        initials: "CW",
+      },
+      mechanic: {
+        name: "Candice Wu",
+        avatar: "/placeholder.svg?height=32&width=32",
+        initials: "CW",
+      },
+      status: "Pending Review",
+      statusColor: "orange",
     },
     {
       id: 6,
-      name: "Natali Craig",
-      username: "@natali",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Active",
-      role: "Mechanic",
-      carModel: "N/A",
+      jobId: "#3061",
+      service: "Engine Problem",
+      submitDate: "Jan 5, 2025",
+      carOwner: {
+        name: "Natali Craig",
+        avatar: "/placeholder.svg?height=32&width=32",
+        initials: "NC",
+      },
+      mechanic: {
+        name: "Natali Craig",
+        avatar: "/placeholder.svg?height=32&width=32",
+        initials: "NC",
+      },
+      status: "Payment Done",
+      statusColor: "green",
     },
     {
       id: 7,
-      name: "Drew Cano",
-      username: "@drew",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Inactive",
-      role: "Mechanic",
-      carModel: "N/A",
+      jobId: "#3059",
+      service: "Oil Change",
+      submitDate: "Jan 3, 2025",
+      carOwner: {
+        name: "Orlando Diggs",
+        avatar: "/placeholder.svg?height=32&width=32",
+        initials: "OD",
+      },
+      mechanic: {
+        name: "Orlando Diggs",
+        avatar: "/placeholder.svg?height=32&width=32",
+        initials: "OD",
+      },
+      status: "Refunded",
+      statusColor: "gray",
     },
     {
       id: 8,
-      name: "Andi Lane",
-      username: "@andi",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Active",
-      role: "Mechanic",
-      carModel: "N/A",
-    },
-    {
-      id: 9,
-      name: "Kate Morrison",
-      username: "@kate",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Active",
-      role: "Car Owner",
-      carModel: "BMW X5",
-    },
-    {
-      id: 10,
-      name: "Joel Miles",
-      username: "@joel",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Inactive",
-      role: "Mechanic",
-      carModel: "N/A",
-    },
-    {
-      id: 11,
-      name: "Marcus Johnson",
-      username: "@marcus",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Active",
-      role: "Car Owner",
-      carModel: "Audi A4",
-    },
-    {
-      id: 12,
-      name: "Sarah Wilson",
-      username: "@sarah",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Active",
-      role: "Mechanic",
-      carModel: "N/A",
+      jobId: "#3057",
+      service: "Engine Problem",
+      submitDate: "Jan 3, 2025",
+      carOwner: {
+        name: "Kate Morrison",
+        avatar: "/placeholder.svg?height=32&width=32",
+        initials: "KM",
+      },
+      mechanic: {
+        name: "Kate Morrison",
+        avatar: "/placeholder.svg?height=32&width=32",
+        initials: "KM",
+      },
+      status: "Refunded",
+      statusColor: "gray",
     },
   ]
 
   const tabs = ["View all", "Car Owner", "Mechanics"]
-  const statusOptions = ["All", "Active", "Inactive"]
+  const statusOptions = ["All", "Pending Review", "Payment Done", "Refunded"]
 
   // Filter and search logic
-  const filteredUsers = useMemo(() => {
-    let filtered = allUsers
+  const filteredDisputes = useMemo(() => {
+    let filtered = allDisputes
 
-    // Filter by tab (role)
+    // Filter by tab (this would be based on who initiated the dispute)
     if (activeTab === "Car Owner") {
-      filtered = filtered.filter((user) => user.role === "Car Owner")
+      // In a real app, you'd filter by who initiated the dispute
+      filtered = filtered.filter((_, index) => index % 2 === 0)
     } else if (activeTab === "Mechanics") {
-      filtered = filtered.filter((user) => user.role === "Mechanic")
+      filtered = filtered.filter((_, index) => index % 2 === 1)
     }
 
     // Filter by status
     if (statusFilter !== "All") {
-      filtered = filtered.filter((user) => user.status === statusFilter)
+      filtered = filtered.filter((dispute) => dispute.status === statusFilter)
     }
 
-    // Filter by search term (name and username)
+    // Filter by search term (job ID, service, names)
     if (searchTerm) {
       filtered = filtered.filter(
-        (user) =>
-          user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          user.username.toLowerCase().includes(searchTerm.toLowerCase()),
+        (dispute) =>
+          dispute.jobId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          dispute.service.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          dispute.carOwner.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          dispute.mechanic.name.toLowerCase().includes(searchTerm.toLowerCase()),
       )
     }
 
@@ -153,10 +194,10 @@ export default function UserControl() {
   }, [activeTab, statusFilter, searchTerm])
 
   // Pagination logic
-  const totalPages = Math.ceil(filteredUsers.length / itemsPerPage)
+  const totalPages = Math.ceil(filteredDisputes.length / itemsPerPage)
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
-  const currentUsers = filteredUsers.slice(startIndex, endIndex)
+  const currentDisputes = filteredDisputes.slice(startIndex, endIndex)
 
   // Reset to page 1 when filters change
   const handleTabChange = (tab) => {
@@ -213,15 +254,28 @@ export default function UserControl() {
     return pages
   }
 
+  const getStatusBadgeClasses = (statusColor) => {
+    switch (statusColor) {
+      case "orange":
+        return "bg-orange-100 text-orange-800"
+      case "green":
+        return "bg-green-100 text-green-800"
+      case "gray":
+        return "bg-gray-100 text-gray-800"
+      default:
+        return "bg-gray-100 text-gray-800"
+    }
+  }
+
   return (
     <div className=" bg-white">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900 mb-6">User Control</h1>
+        <h1 className="text-2xl font-semibold text-gray-900 mb-6">Dispute Center</h1>
 
         {/* Tabs and Search */}
         <div className="flex items-center justify-between mb-6">
-          <div className="flex bg-gray-200 rounded-xl p-1">
+         <div className="flex bg-gray-200 rounded-xl p-1">
             {tabs.map((tab) => (
               <button
                 key={tab}
@@ -252,7 +306,7 @@ export default function UserControl() {
               </svg>
               <input
                 type="text"
-                placeholder="Search by name or username..."
+                placeholder="Search"
                 value={searchTerm}
                 onChange={(e) => handleSearchChange(e.target.value)}
                 className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 text-sm w-64"
@@ -300,13 +354,6 @@ export default function UserControl() {
             </div>
           </div>
         </div>
-
-        {/* Results Summary */}
-        <div className="text-sm text-gray-600 mb-4">
-          Showing {currentUsers.length} of {filteredUsers.length} users
-          {searchTerm && ` matching "${searchTerm}"`}
-          {statusFilter !== "All" && ` with status "${statusFilter}"`}
-        </div>
       </div>
 
       {/* Table */}
@@ -314,91 +361,73 @@ export default function UserControl() {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Users</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                <div className="">
-                  <span>Status</span>
+                <div className="flex items-center space-x-1">
+                  <span>Job ID</span>
+                  <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
                 </div>
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                <div className="">
-                  <span>Role</span>
-                </div>
+                Service
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Car Model
+                Submit Date
               </th>
-              <th className="relative px-6 py-3">
-                <span className="sr-only">Actions</span>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Car Owner
               </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Mechanic
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {currentUsers.length > 0 ? (
-              currentUsers.map((user) => (
-                <tr key={user.id} className="hover:bg-gray-50">
+            {currentDisputes.length > 0 ? (
+              currentDisputes.map((dispute) => (
+                <tr key={dispute.id} onClick={() => navigate(`/details/${dispute.id}`)} className="hover:bg-gray-50">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{dispute.jobId}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{dispute.service}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{dispute.submitDate}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
-                      <div className="flex-shrink-0 h-10 w-10">
-                        <img
-                          className="h-10 w-10 rounded-full object-cover"
-                          src={user.avatar || "/placeholder.svg"}
-                          alt={user.name}
-                        />
+                      <div className="flex-shrink-0 h-8 w-8">
+                        <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
+                          <span className="text-xs font-medium text-gray-600">{dispute.carOwner.initials}</span>
+                        </div>
                       </div>
-                      <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">{user.name}</div>
-                        <div className="text-sm text-gray-500">{user.username}</div>
+                      <div className="ml-3">
+                        <div className="text-sm font-medium text-gray-900">{dispute.carOwner.name}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center">
+                      <div className="flex-shrink-0 h-8 w-8">
+                        <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
+                          <span className="text-xs font-medium text-gray-600">{dispute.mechanic.initials}</span>
+                        </div>
+                      </div>
+                      <div className="ml-3">
+                        <div className="text-sm font-medium text-gray-900">{dispute.mechanic.name}</div>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        user.status === "Active" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-                      }`}
+                      className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${getStatusBadgeClasses(dispute.statusColor)}`}
                     >
-                      <div
-                        className={`w-1.5 h-1.5 rounded-full mr-1.5 ${
-                          user.status === "Active" ? "bg-green-400" : "bg-red-400"
-                        }`}
-                      ></div>
-                      {user.status}
+                      {dispute.status}
                     </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user.role}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user.carModel}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div className="flex items-center space-x-2">
-                      <button className="text-gray-400 hover:text-red-600 transition-colors">
-                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                          />
-                        </svg>
-                      </button>
-                      <button className="text-gray-400 hover:text-blue-600 transition-colors">
-                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                          />
-                        </svg>
-                      </button>
-                    </div>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={5} className="px-6 py-12 text-center text-gray-500">
-                  No users found matching your criteria.
+                <td colSpan={6} className="px-6 py-12 text-center text-gray-500">
+                  No disputes found matching your criteria.
                 </td>
               </tr>
             )}

@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react"
 
-export default function UserControl() {
+export default function Component() {
   const [activeTab, setActiveTab] = useState("View all")
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("All")
@@ -15,7 +15,7 @@ export default function UserControl() {
       id: 1,
       name: "Olivia Rhye",
       username: "@olivia",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
+      avatar: "/placeholder.svg?height=40&width=40",
       status: "Active",
       role: "Car Owner",
       carModel: "Tesla Model X",
@@ -24,7 +24,7 @@ export default function UserControl() {
       id: 2,
       name: "Phoenix Baker",
       username: "@phoenix",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
+      avatar: "/placeholder.svg?height=40&width=40",
       status: "Active",
       role: "Car Owner",
       carModel: "Land Cruiser-22",
@@ -33,7 +33,7 @@ export default function UserControl() {
       id: 3,
       name: "Lana Steiner",
       username: "@lana",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
+      avatar: "/placeholder.svg?height=40&width=40",
       status: "Inactive",
       role: "Car Owner",
       carModel: "Toyota Supra",
@@ -42,7 +42,7 @@ export default function UserControl() {
       id: 4,
       name: "Demi Wilkinson",
       username: "@demi",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
+      avatar: "/placeholder.svg?height=40&width=40",
       status: "Active",
       role: "Car Owner",
       carModel: "Land Cruiser-22",
@@ -51,7 +51,7 @@ export default function UserControl() {
       id: 5,
       name: "Candice Wu",
       username: "@candice",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
+      avatar: "/placeholder.svg?height=40&width=40",
       status: "Active",
       role: "Car Owner",
       carModel: "Toyota Supra",
@@ -60,7 +60,7 @@ export default function UserControl() {
       id: 6,
       name: "Natali Craig",
       username: "@natali",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
+      avatar: "/placeholder.svg?height=40&width=40",
       status: "Active",
       role: "Mechanic",
       carModel: "N/A",
@@ -69,7 +69,7 @@ export default function UserControl() {
       id: 7,
       name: "Drew Cano",
       username: "@drew",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
+      avatar: "/placeholder.svg?height=40&width=40",
       status: "Inactive",
       role: "Mechanic",
       carModel: "N/A",
@@ -78,7 +78,7 @@ export default function UserControl() {
       id: 8,
       name: "Andi Lane",
       username: "@andi",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
+      avatar: "/placeholder.svg?height=40&width=40",
       status: "Active",
       role: "Mechanic",
       carModel: "N/A",
@@ -87,7 +87,7 @@ export default function UserControl() {
       id: 9,
       name: "Kate Morrison",
       username: "@kate",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
+      avatar: "/placeholder.svg?height=40&width=40",
       status: "Active",
       role: "Car Owner",
       carModel: "BMW X5",
@@ -96,7 +96,7 @@ export default function UserControl() {
       id: 10,
       name: "Joel Miles",
       username: "@joel",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
+      avatar: "/placeholder.svg?height=40&width=40",
       status: "Inactive",
       role: "Mechanic",
       carModel: "N/A",
@@ -105,7 +105,7 @@ export default function UserControl() {
       id: 11,
       name: "Marcus Johnson",
       username: "@marcus",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
+      avatar: "/placeholder.svg?height=40&width=40",
       status: "Active",
       role: "Car Owner",
       carModel: "Audi A4",
@@ -114,7 +114,7 @@ export default function UserControl() {
       id: 12,
       name: "Sarah Wilson",
       username: "@sarah",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
+      avatar: "/placeholder.svg?height=40&width=40",
       status: "Active",
       role: "Mechanic",
       carModel: "N/A",
@@ -214,20 +214,20 @@ export default function UserControl() {
   }
 
   return (
-    <div className=" bg-white">
+    <div className="max-w-7xl mx-auto p-6 bg-white">
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-semibold text-gray-900 mb-6">User Control</h1>
 
         {/* Tabs and Search */}
         <div className="flex items-center justify-between mb-6">
-          <div className="flex bg-gray-200 rounded-xl p-1">
+          <div className="flex space-x-1">
             {tabs.map((tab) => (
               <button
                 key={tab}
                 onClick={() => handleTabChange(tab)}
                 className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
-                  activeTab === tab ? "bg-gray-100 text-gray-900" : "text-gray-500 hover:text-gray-700"
+                  activeTab === tab ? "bg-gray-100 text-gray-900" : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
                 }`}
               >
                 {tab}
@@ -314,16 +314,26 @@ export default function UserControl() {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Users</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                <div className="">
+                <div className="flex items-center space-x-1">
                   <span>Status</span>
+                  <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
                 </div>
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                <div className="">
+                <div className="flex items-center space-x-1">
                   <span>Role</span>
+                  <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
                 </div>
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -429,10 +439,10 @@ export default function UserControl() {
                 onClick={() => (typeof page === "number" ? goToPage(page) : null)}
                 className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                   page === currentPage
-                    ? "bg-orange-400/5 text-orange-400"
+                    ? "bg-gray-900 text-white"
                     : page === "..."
                       ? "text-gray-400 cursor-default"
-                      : "text-gray-500 hover:bg-orange-400/5"
+                      : "text-gray-500 hover:text-gray-700 hover:bg-gray-100"
                 }`}
                 disabled={page === "..."}
               >

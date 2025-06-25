@@ -7,6 +7,10 @@ import UserControl from "../Pages/UserControl/UserControl";
 import HomePage from "../Pages/HomePage/HomePage";
 import Settings from "../Pages/Settings/Settings";
 import PlatformSettings from "../Pages/Settings/PlatformSettings";
+import AdminPermissions from "../Pages/Settings/AdminPermissions";
+import DisputeCenter from "../Pages/DisputeCenter/DisputeCenter";
+import DisputeDetails from "../Pages/DisputeCenter/DisputeDetails";
+import Payments from "../Pages/Payments/Payments";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -14,38 +18,43 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <HomePage/>
+        element: <HomePage />,
       },
       {
         path: "/user_control",
-        element: <UserControl/>
+        element: <UserControl />,
       },
       {
         path: "/dispute",
-        element: <ProfilePage/>
+        element: <DisputeCenter />,
+      },
+      {
+        path: "/details/:id",
+        element: <DisputeDetails />,
       },
       {
         path: "/settings",
-        element: <Settings/>,
-        children:[
-          {
-            path: "platform",
-            element: <PlatformSettings/>
-          }
-        ]
+        element: <Settings />,
+      },
+      {
+        path: "/settings/platform",
+        element: <PlatformSettings />,
+      },
+      {
+        path: "/settings/permissions",
+        element: <AdminPermissions />,
       },
       {
         path: "/payments",
-        element: <ProfilePage/>
+        element: <Payments />,
       },
       {
         path: "/profile",
-        element: <ProfilePage/>
+        element: <ProfilePage />,
       },
-
     ],
   },
-  
+
   {
     path: "/signin",
     element: <SignIn />,

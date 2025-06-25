@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaBell } from "react-icons/fa";
 import { RiSearchLine, RiSettings3Fill } from "react-icons/ri";
 
@@ -7,22 +7,37 @@ const SectionTitle = () => {
   const [open, setOpen] = useState(false);
   const bellRef = useRef();
   const location = useLocation();
+  const navigate = useNavigate();
 
-  // Convert current route path to breadcrumb string
+  // Breadcrumb generator with clickable links
   const getBreadcrumbTitle = () => {
     const segments = location.pathname.split("/").filter(Boolean);
-    if (segments.length === 0) return "Dashboard";
+    const crumbs = [{ label: "Dashboard", path: "/" }];
 
-    const formatted = segments
-      .map((seg) =>
-        seg
-          .split("-")
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(" ")
-      )
-      .join(" > ");
+    segments.forEach((seg, index) => {
+      const path = "/" + segments.slice(0, index + 1).join("/");
+      const label = seg
+        .split("-")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+      crumbs.push({ label, path });
+    });
 
-    return `Dashboard > ${formatted}`;
+    return (
+      <div className="text-sm text-[#023337] font-medium space-x-1">
+        {crumbs.map((crumb, idx) => (
+          <span key={crumb.path} className="inline">
+            <span
+              onClick={() => navigate(crumb.path)}
+              className="hover:text-blue-600 cursor-pointer"
+            >
+              {crumb.label}
+            </span>
+            {idx < crumbs.length - 1 && <span className="mx-1">{">"}</span>}
+          </span>
+        ))}
+      </div>
+    );
   };
 
   const notifications = [
@@ -67,11 +82,10 @@ const SectionTitle = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-between relative p-5 border-b border-gray-200 ">
+    <div className="flex items-center justify-between relative p-5 border-b border-gray-200">
+      {/* Breadcrumb Title */}
       <div>
-        <h1 className="">
-          {getBreadcrumbTitle()}
-        </h1>
+        <h1>{getBreadcrumbTitle()}</h1>
       </div>
 
       <div className="flex items-center gap-5" ref={bellRef}>
@@ -96,10 +110,12 @@ const SectionTitle = () => {
           <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-1 ring-white"></span>
         </button>
 
-        {/* 👤 User Avatar */}
-        <RiSettings3Fill className="text-2xl text-gray-700"/>
+        {/* ⚙️ Settings Icon */}
+        <Link to='/'>
+          <RiSettings3Fill className="text-2xl text-gray-700" />
+        </Link>
 
-        {/* 🔽 Dropdown */}
+        {/* 🔽 Notifications Dropdown */}
         {open && (
           <div className="absolute right-0 top-16 w-96 bg-white rounded-xl shadow-xl z-50 border border-[#DBDBDB]">
             <div className="py-2 px-5 shadow font-semibold rounded-t-xl text-gray-700">
