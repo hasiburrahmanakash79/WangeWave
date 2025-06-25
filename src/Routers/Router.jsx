@@ -4,11 +4,18 @@ import Signup from "../Pages/Authentication/Signup";
 import SignIn from "../Pages/Authentication/SignIn";
 import ProfilePage from "../Pages/Authentication/Profile/ProfilePage";
 import UserControl from "../Pages/UserControl/UserControl";
+import HomePage from "../Pages/HomePage/HomePage";
+import Settings from "../Pages/Settings/Settings";
+import PlatformSettings from "../Pages/Settings/PlatformSettings";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Dashboard />,
     children: [
+      {
+        path: "/",
+        element: <HomePage/>
+      },
       {
         path: "/user_control",
         element: <UserControl/>
@@ -19,7 +26,13 @@ const router = createBrowserRouter([
       },
       {
         path: "/settings",
-        element: <ProfilePage/>
+        element: <Settings/>,
+        children:[
+          {
+            path: "platform",
+            element: <PlatformSettings/>
+          }
+        ]
       },
       {
         path: "/payments",
