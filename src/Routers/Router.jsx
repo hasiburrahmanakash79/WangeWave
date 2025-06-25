@@ -11,6 +11,7 @@ import AdminPermissions from "../Pages/Settings/AdminPermissions";
 import DisputeCenter from "../Pages/DisputeCenter/DisputeCenter";
 import DisputeDetails from "../Pages/DisputeCenter/DisputeDetails";
 import Payments from "../Pages/Payments/Payments";
+import UserProfile from "../Pages/UserControl/UserProfile";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -49,8 +50,8 @@ const router = createBrowserRouter([
         element: <Payments />,
       },
       {
-        path: "/profile",
-        element: <ProfilePage />,
+        path: "/profile/:id",
+        element: <UserProfile />,
       },
     ],
   },

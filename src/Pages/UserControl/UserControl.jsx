@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo } from "react"
+import { useNavigate } from "react-router-dom"
 
 export default function UserControl() {
   const [activeTab, setActiveTab] = useState("View all")
@@ -9,6 +10,7 @@ export default function UserControl() {
   const [currentPage, setCurrentPage] = useState(1)
   const [showFilters, setShowFilters] = useState(false)
   const itemsPerPage = 8
+  const navigate = useNavigate()
 
   const allUsers = [
     {
@@ -337,7 +339,7 @@ export default function UserControl() {
           <tbody className="bg-white divide-y divide-gray-200">
             {currentUsers.length > 0 ? (
               currentUsers.map((user) => (
-                <tr key={user.id} className="hover:bg-gray-50">
+                <tr key={user.id} onClick={() => navigate(`/profile/${user.id}`)} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="flex-shrink-0 h-10 w-10">

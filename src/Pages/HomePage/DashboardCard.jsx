@@ -141,7 +141,7 @@ MetricCard.propTypes = {
   sparklinePoints: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
-const Dashboard = () => {
+const DashboardCard = () => {
   // Sample data for sparklines - more realistic curves
   const totalCustomersData = [15, 18, 16, 22, 25, 23, 28, 32, 30, 35, 38, 42];
   const membersData = [35, 32, 34, 30, 28, 25, 23, 20, 18, 22, 19, 16];
@@ -183,4 +183,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardCard;

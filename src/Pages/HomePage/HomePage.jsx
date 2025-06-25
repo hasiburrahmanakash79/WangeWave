@@ -4,7 +4,7 @@ import VisitorsChart from './VisitorsChart';
 
 const HomePage = () => {
     return (
-        <div>
+        <div className='space-y-7'>
             <DashboardCard/>
             <VisitorsChart/>
         </div>
