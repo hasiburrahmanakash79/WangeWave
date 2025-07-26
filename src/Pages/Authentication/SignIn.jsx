@@ -3,8 +3,10 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FaUser } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -18,7 +20,10 @@ const SignIn = () => {
 
   const onSubmit = (data) => {
     console.log("Form Data:", data);
+
     // Perform login API call here
+
+    navigate('/')
   };
 
   return (

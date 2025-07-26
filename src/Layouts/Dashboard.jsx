@@ -1,5 +1,5 @@
 import logo from "../assets/logo/logo.svg";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
   RiDashboardLine,
   RiUserSettingsLine,
@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import SectionTitle from "../components/SectionTitle";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const location = useLocation();
 
   const handleLogout = () => {
@@ -26,6 +27,7 @@ const Dashboard = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         console.log("User logged out");
+        navigate('/signin')
       }
     });
   };
