@@ -9,7 +9,6 @@ const MetricCard = ({
   trendColor,
   sparklinePoints,
 }) => {
-  // Generate smooth curved path for sparkline
   const generateSparklinePath = (points) => {
     if (!points || points.length === 0) return "";
 
@@ -29,21 +28,17 @@ const MetricCard = ({
 
     let path = `M ${coords[0].x} ${coords[0].y}`;
 
-    // Create smooth curves using quadratic bezier curves
     for (let i = 1; i < coords.length; i++) {
       const prev = coords[i - 1];
       const curr = coords[i];
 
       if (i === 1) {
-        // First curve - use current point as control point
         const midX = (prev.x + curr.x) / 2;
         const midY = (prev.y + curr.y) / 2;
         path += ` Q ${curr.x} ${curr.y} ${midX} ${midY}`;
       } else if (i === coords.length - 1) {
-        // Last curve - end at the final point
         path += ` Q ${prev.x} ${prev.y} ${curr.x} ${curr.y}`;
       } else {
-        // Middle curves - smooth transition
         const next = coords[i + 1];
         const midX = (curr.x + next.x) / 2;
         const midY = (curr.y + next.y) / 2;
@@ -58,7 +53,6 @@ const MetricCard = ({
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-6 relative">
-      {/* Header with title and menu */}
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-gray-600 text-sm font-medium">{title}</h3>
         <button className="text-gray-400 hover:text-gray-600">
@@ -67,11 +61,8 @@ const MetricCard = ({
       </div>
 
       <div className="flex items-center justify-between">
-        {/* Main value */}
         <div className="">
           <div className="text-3xl font-bold text-gray-900 mb-2">{value}</div>
-
-          {/* Trend indicator */}
           <div className="flex items-center gap-1">
             <TrendIcon
               size={16}
@@ -142,7 +133,6 @@ MetricCard.propTypes = {
 };
 
 const DashboardCard = () => {
-  // Sample data for sparklines - more realistic curves
   const totalCustomersData = [15, 18, 16, 22, 25, 23, 28, 32, 30, 35, 38, 42];
   const membersData = [35, 32, 34, 30, 28, 25, 23, 20, 18, 22, 19, 16];
   const activeNowData = [8, 12, 15, 18, 16, 20, 24, 27, 25, 30, 28, 32];
