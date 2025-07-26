@@ -102,7 +102,6 @@ const Dashboard = () => {
         <div className="mt-28 ms-3.5 md:ms-0 p-2 bottom-2 absolute w-full">
           <div className="flex items-center justify-center gap-x-3">
             <Link
-              to="/profile"
               className="flex items-center gap-x-3 p-2 text-sm"
             >
               <img

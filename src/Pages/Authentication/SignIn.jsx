@@ -1,8 +1,8 @@
+import logo from "../../assets/logo/logo.svg";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FaUser } from "react-icons/fa6";
-import { Link } from "react-router-dom";
 
 const SignIn = () => {
   const {
@@ -22,27 +22,16 @@ const SignIn = () => {
   };
 
   return (
-    <div className="grid grid-cols-7 min-h-screen bg-base-200">
-      {/* Left Side */}
-      <div className="col-span-3 bg-blue-500 flex items-center p-8">
-        <h2 className="text-white text-4xl font-bold leading-relaxed">
-          Welcome Back! Verify Your <br /> Email to Access Your <br /> Learning
-          Portal!
-        </h2>
-      </div>
-
-      {/* Right Side */}
-      <div className="col-span-4 flex items-center justify-center ">
-        <div className="max-w-lg w-full bg-white rounded-3xl border border-blue-200 shadow-md p-16">
-          <h2 className="text-2xl font-bold text-center mb-2">
-            Sign in Account
-          </h2>
-          <p className="text-center text-sm mb-6">
-            Don’t have an Account?{" "}
-            <Link to='/signup' className="text-blue-500 hover:underline">
-              Sign Up Free
-            </Link>
-          </p>
+    <div className="min-h-screen place-content-center place-items-center bg-[#FFF9F0]">
+      <div className="flex items-center justify-center ">
+        <div className="min-w-md w-full bg-white rounded-3xl border border-gray-200 shadow-md p-7">
+          <div className="place-content-center place-items-center">
+            <img src={logo} alt="" />
+            <p className="text-lg font-semibold mt-2">
+              Fast. Trusted. Local Mechanics.
+            </p>
+          </div>
+          <h2 className="text-2xl font-bold text-center my-5">Sign In</h2>
 
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -92,59 +81,15 @@ const SignIn = () => {
                   {errors.password.message}
                 </p>
               )}
-
-              <div className="flex justify-between items-center mt-2 text-sm">
-                <div className="flex items-center opacity-75">
-                  <input
-                    type="checkbox"
-                    {...register("remember")}
-                    className="mr-2"
-                  />
-                  Remember for 30 Days
-                </div>
-                <a href="#" className="text-blue-500 hover:underline">
-                  Forgot Password?
-                </a>
-              </div>
             </div>
 
             <button
               type="submit"
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md"
+              className="w-full bg-[#FF9500] hover:bg-[#FF8900] text-white font-semibold py-2 rounded-md cursor-pointer mt-5"
             >
               Login
             </button>
           </form>
-
-          {/* Divider */}
-          <div className="divider">Or Login with</div>
-          {/* Social Login */}
-          <div className="flex space-x-4">
-            <button className="flex-1 flex items-center justify-center border border-base-300 rounded-md py-2 hover:bg-gray-100">
-              <img
-                src="https://www.svgrepo.com/show/475656/google-color.svg"
-                alt="Google"
-                className="w-5 h-5 mr-2"
-              />
-              Google
-            </button>
-            <button className="flex-1 flex items-center justify-center border border-base-300 rounded-md py-2 hover:bg-gray-100">
-              <img
-                src="https://www.svgrepo.com/show/452196/facebook-1.svg"
-                alt="Facebook"
-                className="w-5 h-5 mr-2"
-              />
-              Facebook
-            </button>
-          </div>
-
-          {/* Bottom Signup */}
-          <p className="text-center text-sm mt-6">
-            Don’t have an account?{" "}
-            <Link to='/signup' className="text-blue-500 hover:underline">
-              Sign Up Free
-            </Link>
-          </p>
         </div>
       </div>
     </div>

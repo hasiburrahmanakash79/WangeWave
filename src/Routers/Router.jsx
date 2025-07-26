@@ -1,8 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import Dashboard from "../Layouts/Dashboard";
-import Signup from "../Pages/Authentication/Signup";
 import SignIn from "../Pages/Authentication/SignIn";
-import ProfilePage from "../Pages/Authentication/Profile/ProfilePage";
 import UserControl from "../Pages/UserControl/UserControl";
 import HomePage from "../Pages/HomePage/HomePage";
 import Settings from "../Pages/Settings/Settings";
@@ -59,10 +57,6 @@ const router = createBrowserRouter([
   {
     path: "/signin",
     element: <SignIn />,
-  },
-  {
-    path: "/signup",
-    element: <Signup />,
   },
 ]);
 
