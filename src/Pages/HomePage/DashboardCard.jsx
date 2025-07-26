@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { MoreHorizontal, TrendingUp, TrendingDown } from "lucide-react";
+import { TrendingUp, TrendingDown } from "lucide-react";
 
 const MetricCard = ({
   title,
@@ -13,7 +13,7 @@ const MetricCard = ({
     if (!points || points.length === 0) return "";
 
     const width = 120;
-    const height = 40;
+    const height = 45;
     const maxValue = Math.max(...points);
     const minValue = Math.min(...points);
     const range = maxValue - minValue || 1;
@@ -55,9 +55,6 @@ const MetricCard = ({
     <div className="bg-white rounded-lg border border-gray-200 p-6 relative">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-gray-600 text-sm font-medium">{title}</h3>
-        <button className="text-gray-400 hover:text-gray-600">
-          <MoreHorizontal size={20} />
-        </button>
       </div>
 
       <div className="flex items-center justify-between">
@@ -94,7 +91,7 @@ const MetricCard = ({
                 <stop
                   offset="100%"
                   stopColor={trend === "up" ? "#10b981" : "#ef4444"}
-                  stopOpacity="0.05"
+                  stopOpacity="0.00"
                 />
               </linearGradient>
             </defs>
@@ -109,7 +106,7 @@ const MetricCard = ({
             <path
               d={generateSparklinePath(sparklinePoints)}
               stroke={trend === "up" ? "#10b981" : "#ef4444"}
-              strokeWidth="2.5"
+              strokeWidth="1.5"
               fill="none"
               className="drop-shadow-sm"
               strokeLinecap="round"
@@ -135,7 +132,7 @@ MetricCard.propTypes = {
 const DashboardCard = () => {
   const totalCustomersData = [15, 18, 16, 22, 25, 23, 28, 32, 30, 35, 38, 42];
   const membersData = [35, 32, 34, 30, 28, 25, 23, 20, 18, 22, 19, 16];
-  const activeNowData = [8, 12, 15, 18, 16, 20, 24, 27, 25, 30, 28, 32];
+  const activeNowData = [8, 10, 15, 11, 16, 13, 24, 20, 25, 30, 28, 32];
 
   return (
     <div className="">
