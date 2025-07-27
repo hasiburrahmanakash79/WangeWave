@@ -20,9 +20,6 @@ const SignIn = () => {
 
   const onSubmit = (data) => {
     console.log("Form Data:", data);
-
-    // Perform login API call here
-
     navigate('/')
   };
 
