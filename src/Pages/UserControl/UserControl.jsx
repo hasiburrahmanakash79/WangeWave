@@ -1,7 +1,9 @@
 "use client"
 
+import { Edit, Trash } from "lucide-react"
 import { useState, useMemo } from "react"
 import { useNavigate } from "react-router-dom"
+import CommonModal from "../../components/CommonModal"
 
 export default function UserControl() {
   const [activeTab, setActiveTab] = useState("View all")
@@ -9,6 +11,10 @@ export default function UserControl() {
   const [statusFilter, setStatusFilter] = useState("All")
   const [currentPage, setCurrentPage] = useState(1)
   const [showFilters, setShowFilters] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [selectedUser, setSelectedUser] = useState(null)
+  const [editFormData, setEditFormData] = useState({})
   const itemsPerPage = 8
   const navigate = useNavigate()
 
@@ -58,69 +64,6 @@ export default function UserControl() {
       role: "Car Owner",
       carModel: "Toyota Supra",
     },
-    {
-      id: 6,
-      name: "Natali Craig",
-      username: "@natali",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Active",
-      role: "Mechanic",
-      carModel: "N/A",
-    },
-    {
-      id: 7,
-      name: "Drew Cano",
-      username: "@drew",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Inactive",
-      role: "Mechanic",
-      carModel: "N/A",
-    },
-    {
-      id: 8,
-      name: "Andi Lane",
-      username: "@andi",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Active",
-      role: "Mechanic",
-      carModel: "N/A",
-    },
-    {
-      id: 9,
-      name: "Kate Morrison",
-      username: "@kate",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Active",
-      role: "Car Owner",
-      carModel: "BMW X5",
-    },
-    {
-      id: 10,
-      name: "Joel Miles",
-      username: "@joel",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Inactive",
-      role: "Mechanic",
-      carModel: "N/A",
-    },
-    {
-      id: 11,
-      name: "Marcus Johnson",
-      username: "@marcus",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Active",
-      role: "Car Owner",
-      carModel: "Audi A4",
-    },
-    {
-      id: 12,
-      name: "Sarah Wilson",
-      username: "@sarah",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Active",
-      role: "Mechanic",
-      carModel: "N/A",
-    },
   ]
 
   const tabs = ["View all", "Car Owner", "Mechanics"]
@@ -130,19 +73,16 @@ export default function UserControl() {
   const filteredUsers = useMemo(() => {
     let filtered = allUsers
 
-    // Filter by tab (role)
     if (activeTab === "Car Owner") {
       filtered = filtered.filter((user) => user.role === "Car Owner")
     } else if (activeTab === "Mechanics") {
       filtered = filtered.filter((user) => user.role === "Mechanic")
     }
 
-    // Filter by status
     if (statusFilter !== "All") {
       filtered = filtered.filter((user) => user.status === statusFilter)
     }
 
-    // Filter by search term (name and username)
     if (searchTerm) {
       filtered = filtered.filter(
         (user) =>
@@ -193,7 +133,6 @@ export default function UserControl() {
     }
   }
 
-  // Generate page numbers for pagination
   const getPageNumbers = () => {
     const pages = []
     const maxVisiblePages = 5
@@ -215,8 +154,48 @@ export default function UserControl() {
     return pages
   }
 
+  // Modal handlers
+  const handleEditClick = (e, user) => {
+    e.stopPropagation() // Prevent row click navigation
+    setSelectedUser(user)
+    setEditFormData({
+      name: user.name,
+      username: user.username,
+      status: user.status,
+      role: user.role,
+      carModel: user.carModel,
+    })
+    setShowEditModal(true)
+  }
+
+  const handleDeleteClick = (e, user) => {
+    e.stopPropagation() // Prevent row click navigation
+    setSelectedUser(user)
+    setShowDeleteModal(true)
+  }
+
+  const handleEditSubmit = (e) => {
+    e.preventDefault()
+    // Here you would typically send the updated data to an API
+    console.log("Updated user data:", editFormData)
+    setShowEditModal(false)
+    setSelectedUser(null)
+  }
+
+  const handleDeleteConfirm = () => {
+    // Here you would typically send a delete request to an API
+    console.log("Deleting user:", selectedUser)
+    setShowDeleteModal(false)
+    setSelectedUser(null)
+  }
+
+  const handleEditFormChange = (e) => {
+    const { name, value } = e.target
+    setEditFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
   return (
-    <div className=" bg-white">
+    <div className="bg-white">
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-semibold text-gray-900 mb-6">User Control</h1>
@@ -276,7 +255,6 @@ export default function UserControl() {
                 <span>Filters</span>
               </button>
 
-              {/* Filter Dropdown */}
               {showFilters && (
                 <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
                   <div className="p-4">
@@ -303,7 +281,6 @@ export default function UserControl() {
           </div>
         </div>
 
-        {/* Results Summary */}
         <div className="text-sm text-gray-600 mb-4">
           Showing {currentUsers.length} of {filteredUsers.length} users
           {searchTerm && ` matching "${searchTerm}"`}
@@ -316,7 +293,6 @@ export default function UserControl() {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Users</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 <div className="">
@@ -331,8 +307,8 @@ export default function UserControl() {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Car Model
               </th>
-              <th className="relative px-6 py-3">
-                <span className="sr-only">Actions</span>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Actions
               </th>
             </tr>
           </thead>
@@ -372,26 +348,18 @@ export default function UserControl() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user.role}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user.carModel}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div className="flex items-center space-x-2">
-                      <button className="text-gray-400 hover:text-red-600 transition-colors">
-                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                          />
-                        </svg>
+                    <div className="flex items-center space-x-7">
+                      <button
+                        onClick={(e) => handleDeleteClick(e, user)}
+                        className="text-gray-400 hover:text-red-600 transition-colors"
+                      >
+                        <Trash />
                       </button>
-                      <button className="text-gray-400 hover:text-blue-600 transition-colors">
-                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                          />
-                        </svg>
+                      <button
+                        onClick={(e) => handleEditClick(e, user)}
+                        className="text-gray-400 hover:text-blue-600 transition-colors"
+                      >
+                        <Edit />
                       </button>
                     </div>
                   </td>
@@ -457,6 +425,129 @@ export default function UserControl() {
           </button>
         </div>
       )}
+
+      {/* Edit Modal */}
+      <CommonModal
+        isOpen={showEditModal}
+        onClose={() => {
+          setShowEditModal(false)
+          setSelectedUser(null)
+        }}
+        title={`Edit User: ${selectedUser?.name || ""}`}
+      >
+        {selectedUser && (
+          <form onSubmit={handleEditSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Name</label>
+              <input
+                type="text"
+                name="name"
+                value={editFormData.name}
+                onChange={handleEditFormChange}
+                className="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Username</label>
+              <input
+                type="text"
+                name="username"
+                value={editFormData.username}
+                onChange={handleEditFormChange}
+                className="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Status</label>
+              <select
+                name="status"
+                value={editFormData.status}
+                onChange={handleEditFormChange}
+                className="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                required
+              >
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Role</label>
+              <select
+                name="role"
+                value={editFormData.role}
+                onChange={handleEditFormChange}
+                className="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                required
+              >
+                <option value="Car Owner">Car Owner</option>
+                <option value="Mechanic">Mechanic</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Car Model</label>
+              <input
+                type="text"
+                name="carModel"
+                value={editFormData.carModel}
+                onChange={handleEditFormChange}
+                className="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                disabled={editFormData.role === "Mechanic"}
+              />
+            </div>
+            <div className="flex justify-end space-x-3">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowEditModal(false)
+                  setSelectedUser(null)
+                }}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        )}
+      </CommonModal>
+
+      {/* Delete Modal */}
+      <CommonModal
+        isOpen={showDeleteModal}
+        onClose={() => {
+          setShowDeleteModal(false)
+          setSelectedUser(null)
+        }}
+        title="Confirm Delete"
+      >
+        <div className="space-y-4">
+          <p>Are you sure you want to delete the user <strong>{selectedUser?.name}</strong>?</p>
+          <div className="flex justify-end space-x-3">
+            <button
+              onClick={() => {
+                setShowDeleteModal(false)
+                setSelectedUser(null)
+              }}
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleDeleteConfirm}
+              className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </CommonModal>
 
       {/* Click outside to close filters */}
       {showFilters && <div className="fixed inset-0 z-0" onClick={() => setShowFilters(false)} />}
