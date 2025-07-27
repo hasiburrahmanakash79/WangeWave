@@ -53,7 +53,6 @@ export default function UserProfile() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Profile Information Card */}
         <div className="bg-white border border-gray-200 rounded-2xl p-8">
-          {/* Profile Header */}
           <div className="flex items-start space-x-4 mb-8">
             <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
               <img
@@ -70,7 +69,6 @@ export default function UserProfile() {
 
           {/* Contact Information */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-            {/* Email */}
             <div>
               <h3 className="text-sm font-medium text-gray-900 mb-3">Email</h3>
               <div className="space-y-2">
@@ -78,8 +76,6 @@ export default function UserProfile() {
                 <p className="text-sm text-gray-600">danilasmith@untitledui.com</p>
               </div>
             </div>
-
-            {/* Phone */}
             <div>
               <h3 className="text-sm font-medium text-gray-900 mb-3">Phone</h3>
               <div className="space-y-2">
@@ -91,7 +87,6 @@ export default function UserProfile() {
 
           {/* Address and Price */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-            {/* Address */}
             <div>
               <h3 className="text-sm font-medium text-gray-900 mb-3">Address</h3>
               <p className="text-sm text-gray-600">
@@ -100,15 +95,11 @@ export default function UserProfile() {
                 Jersey 45463
               </p>
             </div>
-
-            {/* Average Price */}
             <div>
               <h3 className="text-sm font-medium text-gray-900 mb-3">Avg. Price</h3>
               <p className="text-lg font-semibold text-gray-900">$250 USD</p>
             </div>
           </div>
-
-          {/* Reviews */}
           <div>
             <h3 className="text-sm font-medium text-gray-900 mb-3">Reviews</h3>
             <div className="flex items-center space-x-2">
@@ -123,7 +114,6 @@ export default function UserProfile() {
 
         {/* Papers & Certificates Card */}
         <div className="bg-white border border-gray-200 rounded-2xl p-8">
-          {/* Header */}
           <div className="flex items-center space-x-3 mb-8">
             <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
               <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -136,20 +126,14 @@ export default function UserProfile() {
             </div>
             <h2 className="text-xl font-semibold text-gray-900">Papers & Certificates</h2>
           </div>
-
-          {/* Certificates Section */}
           <div className="mb-8">
             <h3 className="text-sm font-medium text-gray-900 mb-4">Certificates</h3>
             <div className="flex space-x-3">{certificates.map(renderDocumentPlaceholder)}</div>
           </div>
-
-          {/* Papers Section */}
           <div className="mb-8">
             <h3 className="text-sm font-medium text-gray-900 mb-4">Papers</h3>
             <div className="grid grid-cols-4 gap-3">{papers.map(renderDocumentPlaceholder)}</div>
           </div>
-
-          {/* License Section */}
           <div>
             <h3 className="text-sm font-medium text-gray-900 mb-4">License</h3>
             <div className="flex space-x-3">{license.map(renderDocumentPlaceholder)}</div>

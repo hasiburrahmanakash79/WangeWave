@@ -71,7 +71,7 @@ const MetricCard = ({
           </div>
         </div>
 
-        {/* Sparkline chart */}
+        {/* SparkLine chart */}
         <div className=" w-30 h-12">
           <svg width="120" height="48" className="overflow-visible">
             {/* Gradient definitions */}
@@ -130,9 +130,9 @@ MetricCard.propTypes = {
 };
 
 const DashboardCard = () => {
-  const totalCustomersData = [15, 18, 16, 22, 25, 23, 28, 32, 30, 35, 38, 42];
-  const membersData = [35, 32, 34, 30, 28, 25, 23, 20, 18, 22, 19, 16];
-  const activeNowData = [8, 10, 15, 11, 16, 13, 24, 20, 25, 30, 28, 32];
+  const totalCustomersData = [8, 10, 15, 11, 16, 13, 24, 20, 25, 30, 28, 32];
+  const membersData = [8, 10, 15, 11, 16, 13, 24, 20, 25, 30, 28, 32];
+  const activeNowData = [8, 10, 15, 13, 18, 23, 20, 25, 22, 27, 25, 32];
 
   return (
     <div className="">

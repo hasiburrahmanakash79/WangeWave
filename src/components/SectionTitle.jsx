@@ -8,8 +8,6 @@ const SectionTitle = () => {
   const bellRef = useRef();
   const location = useLocation();
   const navigate = useNavigate();
-
-  // Breadcrumb generator with clickable links
   const getBreadcrumbTitle = () => {
     const segments = location.pathname.split("/").filter(Boolean);
     const crumbs = [{ label: "Dashboard", path: "/" }];
@@ -109,13 +107,10 @@ const SectionTitle = () => {
           <FaBell className="text-xl text-gray-700" />
           <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-1 ring-white"></span>
         </button>
-
-        {/* Settings Icon */}
         <Link to='/'>
           <RiSettings3Fill className="text-2xl text-gray-700" />
         </Link>
 
-        {/* Notifications Dropdown */}
         {open && (
           <div className="absolute right-0 top-16 w-96 bg-white rounded-xl shadow-xl z-50 border border-[#DBDBDB]">
             <div className="py-2 px-5 shadow font-semibold rounded-t-xl text-gray-700">

@@ -160,7 +160,6 @@ export default function DisputeCenter() {
     }
   }
 
-  // Generate page numbers for pagination
   const getPageNumbers = () => {
     const pages = []
     const maxVisiblePages = 5
@@ -200,8 +199,6 @@ export default function DisputeCenter() {
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-semibold text-gray-900 mb-6">Dispute Center</h1>
-
-        {/* Tabs and Search */}
         <div className="flex items-center justify-between mb-6">
          <div className="flex bg-gray-200 rounded-xl p-1">
             {tabs.map((tab) => (

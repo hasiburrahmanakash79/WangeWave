@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
 
 const monthlyData = {
@@ -204,7 +204,7 @@ const formatVisits = (value) => {
   return value.toLocaleString();
 };
 
-const CustomTooltip = ({ active, payload, label }) => {
+const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
@@ -219,7 +219,7 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-const CustomDot = ({ cx, cy, payload, active }) => {
+const CustomDot = ({ cx, cy, active }) => {
   if (active) {
     return (
       <circle 

@@ -70,67 +70,7 @@ export default function Payments() {
       statusColor: "red",
       email: "nvt.lsst.nute@gmail.com",
       phone: "(217) 555-0113",
-    },
-    {
-      id: 6,
-      jobId: "#3061",
-      user: {
-        name: "Natali Craig",
-        username: "@natali",
-      },
-      status: "Refund",
-      statusColor: "red",
-      email: "thuongnute@gmail.com",
-      phone: "(405) 555-0128",
-    },
-    {
-      id: 7,
-      jobId: "#3059",
-      user: {
-        name: "Drew Cano",
-        username: "@drew",
-      },
-      status: "Withdraw",
-      statusColor: "gray",
-      email: "g.nute@gmail.com",
-      phone: "(302) 555-0107",
-    },
-    {
-      id: 8,
-      jobId: "#3057",
-      user: {
-        name: "Andi Lane",
-        username: "@andi",
-      },
-      status: "Withdraw",
-      statusColor: "gray",
-      email: "pktnd@gmail.com",
-      phone: "(209) 555-0104",
-    },
-    {
-      id: 9,
-      jobId: "#3056",
-      user: {
-        name: "Kate Morrison",
-        username: "@kate",
-      },
-      status: "Payment",
-      statusColor: "green",
-      email: "kate.morrison@gmail.com",
-      phone: "(555) 123-4567",
-    },
-    {
-      id: 10,
-      jobId: "#3055",
-      user: {
-        name: "Joel Miles",
-        username: "@joel",
-      },
-      status: "Withdraw",
-      statusColor: "gray",
-      email: "joel.miles@gmail.com",
-      phone: "(555) 987-6543",
-    },
+    }
   ]
 
   const tabs = ["Transactions", "Withdrawals", "Refunds"]
