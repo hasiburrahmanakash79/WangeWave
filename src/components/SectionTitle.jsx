@@ -89,7 +89,7 @@ const SectionTitle = () => {
       </div>
 
       <div className="flex items-center gap-5" ref={bellRef}>
-        {/* 🔍 Search */}
+        {/* Search */}
         <div className="flex items-center bg-gray-100 rounded-lg px-2">
           <button className="text-gray-500 p-1">
             <RiSearchLine className="text-lg" />
@@ -101,7 +101,7 @@ const SectionTitle = () => {
           />
         </div>
 
-        {/* 🔔 Notification Bell */}
+        
         <button
           className="relative cursor-pointer"
           onClick={() => setOpen(!open)}
@@ -110,12 +110,12 @@ const SectionTitle = () => {
           <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-1 ring-white"></span>
         </button>
 
-        {/* ⚙️ Settings Icon */}
+        {/* Settings Icon */}
         <Link to='/'>
           <RiSettings3Fill className="text-2xl text-gray-700" />
         </Link>
 
-        {/* 🔽 Notifications Dropdown */}
+        {/* Notifications Dropdown */}
         {open && (
           <div className="absolute right-0 top-16 w-96 bg-white rounded-xl shadow-xl z-50 border border-[#DBDBDB]">
             <div className="py-2 px-5 shadow font-semibold rounded-t-xl text-gray-700">
