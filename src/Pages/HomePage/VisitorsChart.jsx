@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
+import useDashboardData from '../../hooks/useDashboardData';
 
 const monthlyData = {
   'January 2025': [
@@ -236,13 +237,31 @@ const CustomDot = ({ cx, cy, active }) => {
 };
 
 export default function VisitsChart() {
+
+  const {homeData, loading} = useDashboardData();
+
+  console.log( loading, homeData );
+
+  const monthly = homeData?.data?.monthlyData
+
+  console.log(monthly);
+  
   const [hoveredPoint, setHoveredPoint] = useState(null);
-  const [selectedMonth, setSelectedMonth] = useState('March 2025');
+  const [selectedMonth, setSelectedMonth] = useState('August 2025');
   
   const availableMonths = Object.keys(monthlyData);
   const currentData = monthlyData[selectedMonth];
   const previousMonthIndex = availableMonths.indexOf(selectedMonth) - 1;
   const previousMonth = previousMonthIndex >= 0 ? availableMonths[previousMonthIndex] : null;
+
+
+  if (loading) {
+    return (
+      <div className="w-full h-96 bg-white flex items-center justify-center">
+      <div className="text-gray-500">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full h-96 bg-white">

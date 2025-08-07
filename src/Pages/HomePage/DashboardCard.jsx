@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { TrendingUp, TrendingDown } from "lucide-react";
+import useDashboardData from "../../hooks/useDashboardData";
 
 const MetricCard = ({
   title,
@@ -54,7 +55,7 @@ const MetricCard = ({
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-6 relative">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-gray-600 text-sm font-medium">{title}</h3>
+        <h3 className="text-gray-600 text-lg font-semibold">{title}</h3>
       </div>
 
       <div className="flex items-center justify-between">
@@ -130,39 +131,34 @@ MetricCard.propTypes = {
 };
 
 const DashboardCard = () => {
-  const totalCustomersData = [8, 10, 15, 11, 16, 13, 24, 20, 25, 30, 28, 32];
+  const { homeData, loading, } = useDashboardData();
+  const totalCustomersData = [8, 10, 15, 13, 18, 23, 20, 25, 22, 27, 25, 32];
   const membersData = [8, 10, 15, 11, 16, 13, 24, 20, 25, 30, 28, 32];
-  const activeNowData = [8, 10, 15, 13, 18, 23, 20, 25, 22, 27, 25, 32];
+
+  console.log(homeData?.data?.totalUser);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div className="">
       <div className="">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <MetricCard
-            title="Total customers"
-            value="2,420"
+            title="Total Mechanics"
+            value={homeData?.data?.totalMechanics || "0"}
             trend="up"
-            trendValue="40"
+            trendValue="1"
             trendColor="text-green-600"
             sparklinePoints={totalCustomersData}
           />
 
           <MetricCard
             title="Members"
-            value="1,210"
-            trend="down"
-            trendValue="10"
-            trendColor="text-red-500"
-            sparklinePoints={membersData}
-          />
-
-          <MetricCard
-            title="Active now"
-            value="316"
+            value={homeData?.data?.totalUser || "0"}
             trend="up"
-            trendValue="20"
-            trendColor="text-green-600"
-            sparklinePoints={activeNowData}
+            trendValue="10"
+            trendColor="text-green-500"
+            sparklinePoints={membersData}
           />
         </div>
       </div>
