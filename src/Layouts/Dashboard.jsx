@@ -3,16 +3,16 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
   RiDashboardLine,
   RiUserSettingsLine,
-  RiSettings4Line,
   RiLogoutBoxRLine,
-  RiCustomerService2Fill,
   RiBankCardLine,
 } from "react-icons/ri";
 import { IconContext } from "react-icons";
 import Swal from "sweetalert2";
 import SectionTitle from "../components/SectionTitle";
+import useMe from "../hooks/useMe";
 
 const Dashboard = () => {
+  const {data, loading } = useMe();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -27,6 +27,13 @@ const Dashboard = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         console.log("User logged out");
+        // Clear cookies or perform logout logic here
+        document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "isAuthenticated=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        // Redirect to sign-in page   
+        Swal.fire("Logged out!", "You have been logged out successfully.", "success");
+        // Redirect to sign-in page
         navigate('/signin')
       }
     });
@@ -43,22 +50,26 @@ const Dashboard = () => {
       path: "/user_control",
       icon: RiUserSettingsLine,
     },
-    {
-      title: "Dispute Center",
-      path: "/dispute",
-      icon: RiCustomerService2Fill,
-    },
+    // {
+    //   title: "Dispute Center",
+    //   path: "/dispute",
+    //   icon: RiCustomerService2Fill,
+    // },
     {
       title: "Payments",
       path: "/payments",
       icon: RiBankCardLine,
     },
-    {
-      title: "Settings",
-      path: "/settings",
-      icon: RiSettings4Line,
-    },
+    // {
+    //   title: "Settings",
+    //   path: "/settings",
+    //   icon: RiSettings4Line,
+    // },
   ];
+
+  console.log(data?.data);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div className="flex">
@@ -107,13 +118,13 @@ const Dashboard = () => {
               className="flex items-center gap-x-3 p-2 text-sm"
             >
               <img
-                src="https://randomuser.me/api/portraits/men/31.jpg"
+                src="https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"
                 alt="Profile"
                 className="w-10 rounded-full"
               />
               <span>
-                <p className="font-bold">Deal port</p>
-                <p>Super Admin</p>
+                <p className="font-bold">{data?.data?.profile?.fullName}</p>
+                <p>{data?.data?.role}</p>
               </span>
             </Link>
             <button onClick={handleLogout} className="text-2xl cursor-pointer">

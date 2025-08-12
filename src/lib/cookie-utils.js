@@ -91,7 +91,7 @@ export const parseJwt = (token) => {
 };
 
 // Store tokens in cookies with long expiration times
-export const setAuthTokens = (access, refresh) => {
+export const setAuthTokens = (accessToken, refreshToken) => {
   // Set accessToken for 1 month (30 days)
   const accessTokenMaxAge = 30 * 24 * 60 * 60; // 30 days in seconds
 
@@ -99,14 +99,14 @@ export const setAuthTokens = (access, refresh) => {
   const refreshTokenMaxAge = 365 * 24 * 60 * 60;
   const authMaxAge = 365 * 24 * 60 * 60;
 
-  setCookie("access", access, {
+  setCookie("accessToken", accessToken, {
     maxAge: accessTokenMaxAge,
     secure: import.meta.env.VITE_NODE_ENV === "production",
     sameSite: "strict",
     path: "/",
   });
 
-  setCookie("refresh", refresh, {
+  setCookie("refreshToken", refreshToken, {
     maxAge: refreshTokenMaxAge,
     secure: import.meta.env.VITE_NODE_ENV === "production",
     sameSite: "strict",
@@ -140,3 +140,5 @@ export const isTokenExpired = (token) => {
   if (!payload) return true;
   return payload.exp * 1000 < Date.now();
 };
+
+

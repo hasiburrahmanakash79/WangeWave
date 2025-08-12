@@ -1,204 +1,204 @@
-"use client"
+"use client";
 
-import { Edit, Trash } from "lucide-react"
-import { useState, useMemo } from "react"
-import { useNavigate } from "react-router-dom"
-import CommonModal from "../../components/CommonModal"
+import { Edit, Trash } from "lucide-react";
+import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import CommonModal from "../../components/CommonModal";
+import useUser from "../../hooks/useUser";
+import apiClient from "../../lib/api-client"; // Import apiClient for API calls
+import { getCookie } from "../../lib/cookie-utils";
+
 
 export default function UserControl() {
-  const [activeTab, setActiveTab] = useState("View all")
-  const [searchTerm, setSearchTerm] = useState("")
-  const [statusFilter, setStatusFilter] = useState("All")
-  const [currentPage, setCurrentPage] = useState(1)
-  const [showFilters, setShowFilters] = useState(false)
-  const [showEditModal, setShowEditModal] = useState(false)
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [selectedUser, setSelectedUser] = useState(null)
-  const [editFormData, setEditFormData] = useState({})
-  const itemsPerPage = 8
-  const navigate = useNavigate()
+  const { users, loading } = useUser();
+  const [activeTab, setActiveTab] = useState("View all");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [showFilters, setShowFilters] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [editFormData, setEditFormData] = useState({});
+  const itemsPerPage = 8;
+  const navigate = useNavigate();
 
-  const allUsers = [
-    {
-      id: 1,
-      name: "Olivia Rhye",
-      username: "@olivia",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Active",
-      role: "Car Owner",
-      carModel: "Tesla Model X",
-    },
-    {
-      id: 2,
-      name: "Phoenix Baker",
-      username: "@phoenix",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Active",
-      role: "Car Owner",
-      carModel: "Land Cruiser-22",
-    },
-    {
-      id: 3,
-      name: "Lana Steiner",
-      username: "@lana",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Inactive",
-      role: "Car Owner",
-      carModel: "Toyota Supra",
-    },
-    {
-      id: 4,
-      name: "Demi Wilkinson",
-      username: "@demi",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Active",
-      role: "Car Owner",
-      carModel: "Land Cruiser-22",
-    },
-    {
-      id: 5,
-      name: "Candice Wu",
-      username: "@candice",
-      avatar: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png",
-      status: "Active",
-      role: "Car Owner",
-      carModel: "Toyota Supra",
-    },
-  ]
+  // Ensure usersData is an array, default to empty array if undefined/null
+  const usersData = Array.isArray(users?.data) ? users?.data : [];
 
-  const tabs = ["View all", "Car Owner", "Mechanics"]
-  const statusOptions = ["All", "Active", "Inactive"]
+  console.log(usersData);
+
+  const tabs = ["View all", "Car Owner", "Mechanics"];
+  const statusOptions = ["All", "Act ive", "Inactive"];
 
   // Filter and search logic
   const filteredUsers = useMemo(() => {
-    let filtered = allUsers
+    let filtered = usersData;
 
     if (activeTab === "Car Owner") {
-      filtered = filtered.filter((user) => user.role === "Car Owner")
+      filtered = filtered.filter((user) => user.role === "Car Owner");
     } else if (activeTab === "Mechanics") {
-      filtered = filtered.filter((user) => user.role === "Mechanic")
+      filtered = filtered.filter((user) => user.role === "Mechanic");
     }
 
     if (statusFilter !== "All") {
-      filtered = filtered.filter((user) => user.status === statusFilter)
+      filtered = filtered.filter((user) => user.status === statusFilter);
     }
 
     if (searchTerm) {
       filtered = filtered.filter(
         (user) =>
-          user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          user.username.toLowerCase().includes(searchTerm.toLowerCase()),
-      )
+          user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          user.username?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     }
 
-    return filtered
-  }, [activeTab, statusFilter, searchTerm])
+    return filtered;
+  }, [usersData, activeTab, statusFilter, searchTerm]);
 
   // Pagination logic
-  const totalPages = Math.ceil(filteredUsers.length / itemsPerPage)
-  const startIndex = (currentPage - 1) * itemsPerPage
-  const endIndex = startIndex + itemsPerPage
-  const currentUsers = filteredUsers.slice(startIndex, endIndex)
+  const totalPages = Math.ceil((filteredUsers?.length || 0) / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentUsers = filteredUsers.slice(startIndex, endIndex);
 
   // Reset to page 1 when filters change
   const handleTabChange = (tab) => {
-    setActiveTab(tab)
-    setCurrentPage(1)
-  }
+    setActiveTab(tab);
+    setCurrentPage(1);
+  };
 
   const handleSearchChange = (value) => {
-    setSearchTerm(value)
-    setCurrentPage(1)
-  }
+    setSearchTerm(value);
+    setCurrentPage(1);
+  };
 
   const handleStatusFilterChange = (status) => {
-    setStatusFilter(status)
-    setCurrentPage(1)
-  }
+    setStatusFilter(status);
+    setCurrentPage(1);
+  };
 
   // Pagination helpers
   const goToPage = (page) => {
-    setCurrentPage(page)
-  }
+    setCurrentPage(page);
+  };
 
   const goToPrevious = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1)
+      setCurrentPage(currentPage - 1);
     }
-  }
+  };
 
   const goToNext = () => {
     if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1)
+      setCurrentPage(currentPage + 1);
     }
-  }
+  };
 
   const getPageNumbers = () => {
-    const pages = []
-    const maxVisiblePages = 5
+    const pages = [];
+    const maxVisiblePages = 5;
 
     if (totalPages <= maxVisiblePages) {
       for (let i = 1; i <= totalPages; i++) {
-        pages.push(i)
+        pages.push(i);
       }
     } else {
       if (currentPage <= 3) {
-        pages.push(1, 2, 3, "...", totalPages)
+        pages.push(1, 2, 3, "...", totalPages);
       } else if (currentPage >= totalPages - 2) {
-        pages.push(1, "...", totalPages - 2, totalPages - 1, totalPages)
+        pages.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
       } else {
-        pages.push(1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages)
+        pages.push(
+          1,
+          "...",
+          currentPage - 1,
+          currentPage,
+          currentPage + 1,
+          "...",
+          totalPages
+        );
       }
     }
 
-    return pages
-  }
+    return pages;
+  };
 
-  // Modal handlers
+  // API handlers for edit and delete
   const handleEditClick = (e, user) => {
-    e.stopPropagation() // Prevent row click navigation
-    setSelectedUser(user)
+    e.stopPropagation();
+    setSelectedUser(user);
     setEditFormData({
-      name: user.name,
-      username: user.username,
-      status: user.status,
-      role: user.role,
-      carModel: user.carModel,
-    })
-    setShowEditModal(true)
-  }
+      name: user.name || "",
+      username: user.username || "",
+      status: user.status || "Active",
+      role: user.role || "Car Owner",
+      carModel: user.carModel || "",
+    });
+    setShowEditModal(true);
+  };
 
   const handleDeleteClick = (e, user) => {
-    e.stopPropagation() // Prevent row click navigation
-    setSelectedUser(user)
-    setShowDeleteModal(true)
-  }
+    e.stopPropagation();
+    setSelectedUser(user);
+    setShowDeleteModal(true);
+  };
 
-  const handleEditSubmit = (e) => {
-    e.preventDefault()
-    // Here you would typically send the updated data to an API
-    console.log("Updated user data:", editFormData)
-    setShowEditModal(false)
-    setSelectedUser(null)
-  }
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await apiClient.put(`/user/${selectedUser._id}`, editFormData, {
+        headers: {
+          Authorization: `Bearer ${getCookie("accessToken")}`,
+        },
+      });
+      console.log("User updated:", response.data);
+      setShowEditModal(false);
+      setSelectedUser(null);
+      // Optionally trigger a refetch of users via useUser hook
+    } catch (error) {
+      console.error("Edit user failed:", error.response?.data || error.message);
+      alert(`Edit user failed: ${JSON.stringify(error.response?.data) || error.message}`);
+    }
+  };
 
-  const handleDeleteConfirm = () => {
-    // Here you would typically send a delete request to an API
-    console.log("Deleting user:", selectedUser)
-    setShowDeleteModal(false)
-    setSelectedUser(null)
-  }
+  const handleDeleteConfirm = async () => {
+    try {
+      const response = await apiClient.delete(`/user/${selectedUser._id}`, {
+        headers: {
+          Authorization: `Bearer ${getCookie("accessToken")}`,
+        },
+      });
+      console.log("User deleted:", response.data);
+      setShowDeleteModal(false);
+      setSelectedUser(null);
+      // Optionally trigger a refetch of users via useUser hook
+    } catch (error) {
+      console.error("Delete user failed:", error.response?.data || error.message);
+      alert(`Delete user failed: ${JSON.stringify(error.response?.data) || error.message}`);
+    }
+  };
 
   const handleEditFormChange = (e) => {
-    const { name, value } = e.target
-    setEditFormData((prev) => ({ ...prev, [name]: value }))
+    const { name, value } = e.target;
+    setEditFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  if (loading) {
+    return (
+      <div className="w-full h-96 bg-white flex items-center justify-center">
+        <div className="text-gray-500">Loading...</div>
+      </div>
+    );
   }
 
   return (
     <div className="bg-white">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900 mb-6">User Control</h1>
+        <h1 className="text-2xl font-semibold text-gray-900 mb-6">
+          User Control
+        </h1>
 
         {/* Tabs and Search */}
         <div className="flex items-center justify-between mb-6">
@@ -208,7 +208,9 @@ export default function UserControl() {
                 key={tab}
                 onClick={() => handleTabChange(tab)}
                 className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
-                  activeTab === tab ? "bg-gray-100 text-gray-900" : "text-gray-500 hover:text-gray-700"
+                  activeTab === tab
+                    ? "bg-gray-100 text-gray-900"
+                    : "text-gray-500 hover:text-gray-700"
                 }`}
               >
                 {tab}
@@ -244,7 +246,12 @@ export default function UserControl() {
                 onClick={() => setShowFilters(!showFilters)}
                 className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
               >
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -258,7 +265,9 @@ export default function UserControl() {
               {showFilters && (
                 <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
                   <div className="p-4">
-                    <h3 className="text-sm font-medium text-gray-900 mb-3">Filter by Status</h3>
+                    <h3 className="text-sm font-medium text-gray-900 mb-3">
+                      Filter by Status
+                    </h3>
                     <div className="space-y-2">
                       {statusOptions.map((status) => (
                         <label key={status} className="flex items-center">
@@ -267,10 +276,14 @@ export default function UserControl() {
                             name="status"
                             value={status}
                             checked={statusFilter === status}
-                            onChange={(e) => handleStatusFilterChange(e.target.value)}
+                            onChange={(e) =>
+                              handleStatusFilterChange(e.target.value)
+                            }
                             className="h-4 w-4 text-gray-600 focus:ring-gray-500 border-gray-300"
                           />
-                          <span className="ml-2 text-sm text-gray-700">{status}</span>
+                          <span className="ml-2 text-sm text-gray-700">
+                            {status}
+                          </span>
                         </label>
                       ))}
                     </div>
@@ -293,16 +306,14 @@ export default function UserControl() {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Users</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                <div className="">
-                  <span>Status</span>
-                </div>
+                Users
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                <div className="">
-                  <span>Role</span>
-                </div>
+                Status
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Role
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Car Model
@@ -315,38 +326,54 @@ export default function UserControl() {
           <tbody className="bg-white divide-y divide-gray-200">
             {currentUsers.length > 0 ? (
               currentUsers.map((user) => (
-                <tr key={user.id} onClick={() => navigate(`/profile/${user.id}`)} className="hover:bg-gray-50">
+                <tr
+                  key={user?._id}
+                  onClick={() => navigate(`/profile/${user._id}`)} // Changed user.id to user._id
+                  className="hover:bg-gray-50"
+                >
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="flex-shrink-0 h-10 w-10">
                         <img
                           className="h-10 w-10 rounded-full object-cover"
                           src={user.avatar || "/placeholder.svg"}
-                          alt={user.name}
+                          alt={user.name || "User"}
                         />
                       </div>
                       <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">{user.name}</div>
-                        <div className="text-sm text-gray-500">{user.username}</div>
+                        <div className="text-sm font-medium text-gray-900">
+                          {user.name || "N/A"}
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          {user.username || "N/A"}
+                        </div>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
                       className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        user.status === "Active" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+                        user.isVerified === "true"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-red-100 text-red-800"
                       }`}
                     >
                       <div
                         className={`w-1.5 h-1.5 rounded-full mr-1.5 ${
-                          user.status === "Active" ? "bg-green-400" : "bg-red-400"
+                          user.isVerified === "true"
+                            ? "bg-green-400"
+                            : "bg-red-400"
                         }`}
                       ></div>
-                      {user.status}
+                      {user.isVerified || "N/A"}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user.role}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user.carModel}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {user.role || "N/A"}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {user.carModel || "N/A"}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div className="flex items-center space-x-7">
                       <button
@@ -367,7 +394,10 @@ export default function UserControl() {
               ))
             ) : (
               <tr>
-                <td colSpan={5} className="px-6 py-12 text-center text-gray-500">
+                <td
+                  colSpan={5}
+                  className="px-6 py-12 text-center text-gray-500"
+                >
                   No users found matching your criteria.
                 </td>
               </tr>
@@ -383,11 +413,23 @@ export default function UserControl() {
             onClick={goToPrevious}
             disabled={currentPage === 1}
             className={`flex items-center space-x-2 px-3 py-2 text-sm font-medium transition-colors ${
-              currentPage === 1 ? "text-gray-300 cursor-not-allowed" : "text-gray-500 hover:text-gray-700"
+              currentPage === 1
+                ? "text-gray-300 cursor-not-allowed"
+                : "text-gray-500 hover:text-gray-700"
             }`}
           >
-            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
             </svg>
             <span>Previous</span>
           </button>
@@ -396,13 +438,15 @@ export default function UserControl() {
             {getPageNumbers().map((page, index) => (
               <button
                 key={index}
-                onClick={() => (typeof page === "number" ? goToPage(page) : null)}
+                onClick={() =>
+                  typeof page === "number" ? goToPage(page) : null
+                }
                 className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                   page === currentPage
                     ? "bg-orange-400/5 text-orange-400"
                     : page === "..."
-                      ? "text-gray-400 cursor-default"
-                      : "text-gray-500 hover:bg-orange-400/5"
+                    ? "text-gray-400 cursor-default"
+                    : "text-gray-500 hover:bg-orange-400/5"
                 }`}
                 disabled={page === "..."}
               >
@@ -415,12 +459,24 @@ export default function UserControl() {
             onClick={goToNext}
             disabled={currentPage === totalPages}
             className={`flex items-center space-x-2 px-3 py-2 text-sm font-medium transition-colors ${
-              currentPage === totalPages ? "text-gray-300 cursor-not-allowed" : "text-gray-500 hover:text-gray-700"
+              currentPage === totalPages
+                ? "text-gray-300 cursor-not-allowed"
+                : "text-gray-500 hover:text-gray-700"
             }`}
           >
             <span>Next</span>
-            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
             </svg>
           </button>
         </div>
@@ -430,15 +486,17 @@ export default function UserControl() {
       <CommonModal
         isOpen={showEditModal}
         onClose={() => {
-          setShowEditModal(false)
-          setSelectedUser(null)
+          setShowEditModal(false);
+          setSelectedUser(null);
         }}
         title={`Edit User: ${selectedUser?.name || ""}`}
       >
         {selectedUser && (
           <form onSubmit={handleEditSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700">Name</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Name
+              </label>
               <input
                 type="text"
                 name="name"
@@ -449,7 +507,9 @@ export default function UserControl() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">Username</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Username
+              </label>
               <input
                 type="text"
                 name="username"
@@ -460,7 +520,9 @@ export default function UserControl() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">Status</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Status
+              </label>
               <select
                 name="status"
                 value={editFormData.status}
@@ -473,7 +535,9 @@ export default function UserControl() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">Role</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Role
+              </label>
               <select
                 name="role"
                 value={editFormData.role}
@@ -486,7 +550,9 @@ export default function UserControl() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">Car Model</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Car Model
+              </label>
               <input
                 type="text"
                 name="carModel"
@@ -500,8 +566,8 @@ export default function UserControl() {
               <button
                 type="button"
                 onClick={() => {
-                  setShowEditModal(false)
-                  setSelectedUser(null)
+                  setShowEditModal(false);
+                  setSelectedUser(null);
                 }}
                 className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
               >
@@ -522,18 +588,21 @@ export default function UserControl() {
       <CommonModal
         isOpen={showDeleteModal}
         onClose={() => {
-          setShowDeleteModal(false)
-          setSelectedUser(null)
+          setShowDeleteModal(false);
+          setSelectedUser(null);
         }}
         title="Confirm Delete"
       >
         <div className="space-y-4">
-          <p>Are you sure you want to delete the user <strong>{selectedUser?.name}</strong>?</p>
+          <p>
+            Are you sure you want to delete the user{" "}
+            <strong>{selectedUser?.name || "N/A"}</strong>?
+          </p>
           <div className="flex justify-end space-x-3">
             <button
               onClick={() => {
-                setShowDeleteModal(false)
-                setSelectedUser(null)
+                setShowDeleteModal(false);
+                setSelectedUser(null);
               }}
               className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
             >
@@ -550,7 +619,12 @@ export default function UserControl() {
       </CommonModal>
 
       {/* Click outside to close filters */}
-      {showFilters && <div className="fixed inset-0 z-0" onClick={() => setShowFilters(false)} />}
+      {showFilters && (
+        <div
+          className="fixed inset-0 z-0"
+          onClick={() => setShowFilters(false)}
+        />
+      )}
     </div>
-  )
+  );
 }
