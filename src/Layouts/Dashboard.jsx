@@ -67,8 +67,6 @@ const Dashboard = () => {
     // },
   ];
 
-  console.log(data?.data);
-
   if (loading) return <div>Loading...</div>;
 
   return (
@@ -136,7 +134,7 @@ const Dashboard = () => {
 
       {/* Main Content */}
       <div className="pl-64 flex-1 overflow-y-auto transition-all duration-500 h-[100vh]">
-        <SectionTitle />
+        {/* <SectionTitle /> */}
         <div className="p-5">
           <Outlet />
         </div>

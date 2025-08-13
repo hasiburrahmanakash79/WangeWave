@@ -135,9 +135,9 @@ const DashboardCard = () => {
   const totalCustomersData = [8, 10, 15, 13, 18, 23, 20, 25, 22, 27, 25, 32];
   const membersData = [8, 10, 15, 11, 16, 13, 24, 20, 25, 30, 28, 32];
 
-  console.log(homeData?.data?.totalUser);
-
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return <div className="flex h-96 items-center justify-center bg-white">Loading...</div>;
+  }
 
   return (
     <div className="">
